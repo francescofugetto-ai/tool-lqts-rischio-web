@@ -1,0 +1,575 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tool 1-2-3 LQTS">
+<meta name="theme-color" content="#FAF9F7">
+<script data-iphone="sentinella">
+(function(){
+var h=document.documentElement, msg="";
+function ha(c){ return (" "+h.className+" ").indexOf(" "+c+" ")>=0; }
+// L'errore puo' arrivare prima che l'avviso esista — uno script in <head> che
+// non si lascia leggere —: il messaggio si tiene da parte e si scrive quando
+// la pagina c'e'.
+function scrivi(){
+  var e=document.getElementById("nmerr");
+  if(e&&msg) e.textContent="Errore del motore: "+msg;
+}
+function ko(m){
+  if(m&&!msg) msg=m;
+  if(!ha("motore-ko")) h.className+=" motore-ko";
+  scrivi();
+}
+h.className+=" js";
+window.onerror=function(m,src,riga,col){
+  m=String(m);
+  if(/^Script error\.?$/.test(m)) m="il browser non ne mostra il dettaglio (\u00abScript error.\u00bb)";
+  ko(m+(riga?" (riga "+riga+(col?", colonna "+col:"")+")":""));
+};
+document.addEventListener("DOMContentLoaded",function(){
+  if(!ha("motore-ok")) ko(msg||"il motore non ha completato l'avvio"); else scrivi();
+});
+})();
+</script>
+<title>QT lungo — rischio a 5 anni da QTc e genotipo (1-2-3 LQTS)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#FAF9F7; --surface:#FFFFFF; --surface-alt:#F3F2EF;
+    --border:rgba(11,11,11,0.10); --border-strong:rgba(11,11,11,0.18);
+    --text-primary:#0B0B0B; --text-secondary:#52514E; --text-muted:#76746F;
+    --accent-blue:#2A78D6;   --accent-blue-bg:#E6F1FB;   --accent-blue-border:#B5D4F4;
+    --accent-amber:#BA7517;  --accent-amber-bg:#FAEEDA;  --accent-amber-border:#FAC775;
+    --accent-red:#A32D2D;    --accent-red-bg:#FCEBEB;    --accent-red-border:#F7C1C1;
+    --accent-green:#3B6D11;  --accent-green-bg:#EAF3DE;  --accent-green-border:#C0DD97;
+    --cor-1:#3B8E5A; --cor-2a:#E0A82E; --cor-2b:#DE7E3C; --cor-3:#B33A3A;
+    --k0:#2E7D4F; --k0-bg:#E2F3E8; --k0-bd:#A6D9B8;
+    --k1:#2A78D6; --k1-bg:#E3EFFB; --k1-bd:#A9CBF1;
+    --k2:#8A6A00; --k2-bg:#FBF3C8; --k2-bd:#EBD56C;
+    --k3:#B45309; --k3-bg:#FDEBD8; --k3-bd:#F4BD85;
+    --k4:#A32D2D; --k4-bg:#FCE3E3; --k4-bd:#F0A9A9;
+    --grid:rgba(42,120,214,.08);
+    --font:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --display:'IBM Plex Sans Condensed','Arial Narrow',-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Consolas,'Courier New',monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111418; --surface:#181C22; --surface-alt:#20252D;
+      --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.19);
+      --text-primary:#E7EAEE; --text-secondary:#B8BEC7; --text-muted:#949BA5;
+      --accent-blue:#72AAEE;   --accent-blue-bg:#18283A;   --accent-blue-border:#2E4B6C;
+      --accent-amber:#E3A94F;  --accent-amber-bg:#30250F;  --accent-amber-border:#5D4719;
+      --accent-red:#EF8E8E;    --accent-red-bg:#361B1B;    --accent-red-border:#6B3232;
+      --accent-green:#95C873;  --accent-green-bg:#1C2A13;  --accent-green-border:#3C5626;
+      --k0:#8FD3A8; --k0-bg:#132B1D; --k0-bd:#2D5A3E;
+      --k1:#8EC0F5; --k1-bg:#16283C; --k1-bd:#2F5378;
+      --k2:#EDD36A; --k2-bg:#2C260C; --k2-bd:#5E5120;
+      --k3:#F3B27A; --k3-bg:#33210F; --k3-bd:#6B4524;
+      --k4:#F29A9A; --k4-bg:#361B1B; --k4-bd:#6B3232;
+      --grid:rgba(114,170,238,.07);
+      color-scheme:dark;
+    }
+  }
+  body { font-family:var(--font); background:var(--bg); color:var(--text-primary); font-size:14.5px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .page { max-width:960px; margin:0 auto; padding:0 16px 4rem; }
+  strong, b { font-weight:600; }
+  .muted { color:var(--text-muted); }
+  .hero { margin:0 -16px 0; padding:2.2rem 16px 1.3rem; border-bottom:1px solid var(--border);
+          background-color:var(--bg);
+          background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+          background-size:22px 22px; }
+  .kicker { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-blue); margin-bottom:8px; }
+  .headline { font-family:var(--display); font-size:30px; font-weight:700; line-height:1.12; margin-bottom:10px; }
+  .lede { font-size:14.5px; color:var(--text-secondary); max-width:760px; margin-bottom:12px; }
+  .lede strong { color:var(--text-primary); }
+  .meta-row { display:flex; flex-wrap:wrap; gap:6px 8px; font-size:12px; }
+  .meta-chip { background:var(--surface); border:1px solid var(--border-strong); border-radius:99px; padding:2px 10px; color:var(--text-secondary); overflow-wrap:anywhere; }
+  .meta-chip strong { color:var(--text-primary); }
+  .bar { position:-webkit-sticky;position:sticky; top:0; z-index:30; background:var(--bg); border-bottom:1px solid var(--border-strong);
+         margin:0 -16px 1.2rem; padding:8px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+  .bar .lbl { font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); }
+  .bar .sp { flex:1 1 auto; }
+  .btn { font:600 12.5px var(--font); padding:6px 13px; border-radius:99px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text-secondary); cursor:pointer; }
+  .btn:hover { border-color:var(--accent-blue); color:var(--accent-blue); }
+  .stage { display:flex; align-items:baseline; gap:10px; margin:2rem 0 .7rem; padding-bottom:6px; border-bottom:2px solid var(--border-strong); }
+  .stage-n { font-family:var(--mono); font-size:12px; font-weight:600; color:#FFFFFF; background:var(--accent-blue); border-radius:6px; padding:1px 7px; }
+  .stage-t { font-family:var(--display); font-size:20px; font-weight:700; line-height:1.2; }
+  .stage-w { margin-left:auto; font-size:11.5px; color:var(--text-muted); text-align:right; }
+  .card { background:var(--surface); border:1px solid var(--border-strong); border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+  .card h3 { font-size:13px; font-weight:600; letter-spacing:.02em; margin-bottom:8px; color:var(--text-secondary); }
+  .row { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:10px; }
+  .row:last-child { margin-bottom:0; }
+  .fl { font-size:12.5px; font-weight:600; color:var(--text-secondary); min-width:150px; }
+  .fl small { display:block; font-weight:400; color:var(--text-muted); font-size:11.5px; }
+  input[type=number] { font:500 15px var(--font); color:var(--text-primary); background:var(--surface); border:1px solid var(--border-strong); border-radius:8px; padding:6px 9px; width:92px; text-align:center; }
+  .seg { display:inline-flex; flex-wrap:wrap; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; }
+  .seg label { position:relative; cursor:pointer; }
+  .seg input { position:absolute; opacity:0; width:1px; height:1px; }
+  .seg span { display:block; padding:6px 12px; font-size:13.5px; font-weight:500; color:var(--text-secondary); border-right:1px solid var(--border); }
+  .seg label:last-child span { border-right:none; }
+  .seg input:checked + span { background:var(--text-primary); color:var(--bg); }
+  .seg input:focus-visible + span { outline:2px solid var(--accent-blue); outline-offset:-2px; }
+  .chk { display:flex; align-items:flex-start; gap:9px; padding:6px 0; font-size:14px; line-height:1.45; border-bottom:1px dashed var(--border); cursor:pointer; }
+  .chk:last-child { border-bottom:none; }
+  .chk input { margin-top:3px; width:17px; height:17px; flex:0 0 auto; accent-color:var(--accent-blue); }
+  .chk small { display:block; color:var(--text-muted); font-size:12px; }
+  .chk .tx { flex:1 1 auto; min-width:0; }
+  .riga { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; padding:6px 0; border-bottom:1px dashed var(--border); }
+  .riga .fl { min-width:0; flex:1 1 180px; }
+  .hide { display:none !important; }
+  .esito { display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-bottom:4px; }
+  .cat { display:inline-block; font-size:12.5px; font-weight:600; border-radius:99px; padding:2px 10px; border:1px solid; }
+  .k0 { color:var(--k0); background:var(--k0-bg); border-color:var(--k0-bd); }
+  .k1 { color:var(--k1); background:var(--k1-bg); border-color:var(--k1-bd); }
+  .k2 { color:var(--k2); background:var(--k2-bg); border-color:var(--k2-bd); }
+  .k3 { color:var(--k3); background:var(--k3-bg); border-color:var(--k3-bd); }
+  .k4 { color:var(--k4); background:var(--k4-bg); border-color:var(--k4-bd); }
+  .kx { color:var(--text-muted); background:var(--surface-alt); border-color:var(--border-strong); }
+  .big { font-family:var(--display); font-size:26px; font-weight:700; line-height:1.15; }
+  .cor { display:inline-block; font-family:var(--mono); font-size:11px; font-weight:600; color:#FFFFFF; border-radius:4px; padding:0 5px; margin:0 1px; white-space:nowrap; vertical-align:1px; }
+  .c1 { background:var(--cor-1); } .c2a { background:var(--cor-2a); color:#1D1602; } .c2b { background:var(--cor-2b); } .c3 { background:var(--cor-3); }
+  .pg { font-family:var(--mono); font-size:11px; color:var(--text-muted); }
+  .dv { font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.03em; color:var(--accent-red); background:var(--accent-red-bg); border:1px solid var(--accent-red-border); border-radius:4px; padding:0 5px; white-space:nowrap; }
+  .nota { border-left:3px solid var(--accent-amber); background:var(--accent-amber-bg); border-radius:0 8px 8px 0; padding:7px 11px; margin-top:8px; font-size:13.5px; }
+  .nota.info { border-left-color:var(--accent-blue); background:var(--accent-blue-bg); }
+  .nota.stop { border-left-color:var(--accent-red); background:var(--accent-red-bg); }
+  .nota.ok { border-left-color:var(--accent-green); background:var(--accent-green-bg); }
+  .nota.spenta { border-left-color:var(--border-strong); background:var(--surface-alt); color:var(--text-secondary); }
+  .nota strong { color:var(--text-primary); }
+  .passo { display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed var(--border); }
+  .passo:last-child { border-bottom:none; }
+  .passo .ico { flex:0 0 26px; font-weight:700; text-align:center; font-family:var(--mono); font-size:13px; padding-top:1px; }
+  .passo .tx { flex:1 1 auto; font-size:14px; min-width:0; overflow-wrap:anywhere; }
+  .passo.att { background:var(--accent-blue-bg); border-radius:8px; border-bottom-color:transparent; padding:8px 8px; margin:2px -8px; }
+  .passo.att .ico { color:var(--accent-blue); }
+  .lista li { margin:4px 0 4px 18px; font-size:13.5px; }
+  .foot { margin-top:2.4rem; padding-top:1rem; border-top:1px solid var(--border-strong); font-size:12px; color:var(--text-muted); line-height:1.7; }
+  .foot strong { color:var(--text-secondary); }
+  .farm { border-left:4px solid var(--border-strong); }
+  .farm.s-ok { border-left-color:var(--k0); }
+  .farm.s-ris { border-left-color:var(--accent-amber); }
+  .farm.s-no { border-left-color:var(--k4); }
+  .farm .nome { font-family:var(--display); font-size:21px; font-weight:700; line-height:1.15; }
+  .sint { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; padding:6px 0; border-bottom:1px dashed var(--border); font-size:14px; }
+  .sint:last-child { border-bottom:none; }
+  .sint .n { font-weight:600; min-width:110px; }
+  .sint .d { color:var(--text-secondary); font-size:13px; }
+  @media (max-width:640px) {
+    .headline { font-size:25px; }
+    .stage-w { display:none; }
+    .fl { min-width:0; width:100%; }
+    .big { font-size:22px; }
+    .farm .nome { font-size:19px; }
+    .page { overflow-wrap:anywhere; }
+  }
+  .chk.on .tx { color:var(--text-primary); font-weight:500; }
+  @media print { .bar { position:static; } }
+</style>
+<style>
+  .griglia { width:100%; border-collapse:collapse; font-size:12.5px; margin-top:6px; }
+  .griglia th, .griglia td { border:1px solid var(--border); padding:3px 5px; text-align:center; }
+  .griglia th { background:var(--surface-alt); font-weight:600; color:var(--text-secondary); }
+  .griglia td.qt { font-family:var(--mono); font-size:11.5px; color:var(--text-secondary); white-space:nowrap; }
+  .griglia td.g0 { background:var(--k0-bg); } .griglia td.g1 { background:var(--k2-bg); } .griglia td.g2 { background:var(--k3-bg); } .griglia td.g3 { background:var(--k4-bg); }
+  .griglia td.sel { outline:2.5px solid var(--text-primary); outline-offset:-2px; font-weight:700; }
+  .scorri { overflow-x:auto; }
+</style>
+<style data-iphone="stile">
+/* L'avviso e' visibile per costruzione: lo nasconde solo la classe che la
+   sentinella mette quando JavaScript esiste, e lo rimostra quando il motore
+   muore. Nell'anteprima dell'iPhone nessuna delle due arriva. */
+#nomotore{background:#FCEBEB;border:1.5px solid #A32D2D;border-radius:10px;
+ padding:12px 15px;margin:0 0 1.1rem;font-size:13.5px;line-height:1.6;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+#nomotore strong{display:block;color:#A32D2D;font-size:15px;margin-bottom:4px}
+#nomotore p{margin:6px 0 0}
+#nomotore a{color:#A32D2D}
+#nomotore .nmurl{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:.92em;word-break:break-all}
+#nomotore .nmerr{display:block;font-family:'SFMono-Regular',Consolas,Menlo,monospace;
+ font-size:11.5px;color:#A32D2D;margin-top:6px;word-break:break-word}
+#nomotore .nmerr:empty{display:none}
+html.js #nomotore{display:none}
+html.js.motore-ko #nomotore{display:block}
+
+#nmprivacy{background:#E2F4F5;border:1px solid #A7DBDE;border-radius:8px;padding:9px 13px;
+ margin:0 0 1rem;font-size:12.5px;line-height:1.55;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+@media print{#nmprivacy{display:none}}
+</style>
+</head>
+<body>
+<div class="nomotore" id="nomotore" role="alert">
+ <strong>Motore di calcolo non attivo</strong>
+ <p>I calcoli, i filtri e i comandi di questa pagina <b>non funzionano</b>: dove leggi «—» non c'è un
+ valore. Il testo resta leggibile, i numeri che dipendono dai tuoi dati no. Non usare questa pagina
+ per decidere una dose.</p>
+ <p>Su iPhone e iPad succede sempre con un file salvato sul telefono: si apre nell'<b>anteprima</b> —
+ dall'app File, da Mail, da WhatsApp —, che mostra la pagina ma non esegue il motore, e Apple non
+ permette di aprirlo in Safari. Sull'iPhone il tool funziona aperto da questo indirizzo, in Safari: <a class="nmurl" href="https://francescofugetto-ai.github.io/tool-lqts-rischio-web/">https://francescofugetto-ai.github.io/tool-lqts-rischio-web/</a> — poi Condividi, «Aggiungi alla schermata Home». Dopo la prima apertura funziona anche senza rete. Su computer e Android basta aprire il file.</p>
+ <span class="nmerr" id="nmerr"></span>
+</div>
+<div class="nmprivacy" id="nmprivacy">
+ <b>Quello che scrivi resta su questo dispositivo.</b> La pagina non invia niente in rete e non
+ salva niente: nessun dato esce da qui. Per la stessa ragione, <b>chiudendola il contenuto si
+ perde</b> — copia il referto dove ti serve prima di chiudere.
+</div>
+<div class="page">
+<header class="hero">
+  <div class="kicker">Strumento · Aritmie ventricolari · ESC 2022 · Mazzanti 2018</div>
+  <h1 class="headline">QT lungo — rischio a 5 anni da QTc e genotipo (1-2-3 LQTS)</h1>
+  <p class="lede"><strong>Come si usa.</strong> Il passo 1 porta il gene e la sua variante, il passo 2 il QTc misurato come nel paper. Ne esce il <strong>rischio a 5 anni senza betabloccante</strong> letto nella <strong>Tab. 2 di Mazzanti 2018</strong>, la cella su cui si basa la ESC per il calcolatore 1-2-3 LQTS: fascia di QTc di 10 ms e genotipo, con l'intervallo di confidenza, il gruppo di rischio che il paper stesso disegna e la soglia del 5% proposta dallo studio di validazione. <strong>Non è una formula</strong>: il paper non la pubblica, e lo strumento legge la tabella cella per cella. Il passo 4 porta il quadro clinico e ne esce la <strong>decisione della ESC 2022</strong> — l'ICD considerabile nell'asintomatico ad alto rischio, in aggiunta alla terapia del genotipo — con i limiti del modello per questo paziente. <strong>Nessuna dose</strong>: i farmaci e le dosi sono nel Tool QT lungo. <strong>Azzera</strong>, in alto, ricomincia.</p>
+  <div class="meta-row">
+    <span class="meta-chip"><strong>Tabella</strong> Mazzanti A, et al. J Am Coll Cardiol 2018;71:1663–1671, Tab. 2, Fig. 2 e Central Illustration</span>
+    <span class="meta-chip"><strong>Soglia proposta</strong> Mazzanti A, et al. Europace 2022;24:614–619 (validazione, rif. 947 della ESC)</span>
+    <span class="meta-chip"><strong>Decisione</strong> 2022 ESC Guidelines, ventricular arrhythmias: Rec. Table 41, p. 4078 · Fig. 31, p. 4078</span>
+  </div>
+</header>
+
+<div class="bar" id="bar" aria-live="polite">
+  <span class="lbl">Rischio</span> <span id="barRischio" class="cat kx">—</span>
+  <span class="lbl">Gruppo</span> <span id="barGruppo" class="cat kx">—</span>
+  <span class="lbl">ESC</span> <span id="barEsc" class="cat kx">—</span>
+  <span class="sp"></span>
+  <button class="btn" id="azzera" type="button">Azzera</button>
+</div>
+<div class="stage"><span class="stage-n">1</span><span class="stage-t">Il genotipo</span><span class="stage-w">Mazzanti 2018, Metodi</span></div>
+<div class="card">
+  <div class="riga"><span class="fl">Gene</span>
+    <span class="seg">
+      <label><input type="radio" name="gene" value="lqt1"><span>KCNQ1 · LQT1</span></label>
+      <label><input type="radio" name="gene" value="lqt2"><span>KCNH2 · LQT2</span></label>
+      <label><input type="radio" name="gene" value="lqt3"><span>SCN5A · LQT3</span></label>
+      <label><input type="radio" name="gene" value="altro"><span>un altro gene</span></label>
+      <label><input type="radio" name="gene" value="doppia"><span>due mutazioni</span></label>
+      <label><input type="radio" name="gene" value="nn"><span>genotipo non noto</span></label>
+    </span></div>
+  <div class="riga hide" id="rigaVar"><span class="fl">La variante</span>
+    <span class="seg">
+      <label><input type="radio" name="var" value="pat"><span>patogena o probabilmente patogena</span></label>
+      <label><input type="radio" name="var" value="vus"><span>di significato incerto</span></label>
+      <label><input type="radio" name="var" value="ben"><span>benigna o probabilmente benigna</span></label>
+    </span></div>
+  <div class="muted" style="font-size:12.5px;margin-top:6px">La coorte è di portatori di <b>una sola</b> mutazione in KCNQ1, KCNH2 o SCN5A; le mutazioni doppie (come nella sindrome di Jervell e Lange-Nielsen) e le varianti benigne o probabilmente benigne erano escluse; l'89% aveva una variante patogena o probabilmente patogena, l'11% una variante di significato incerto (Mazzanti 2018, Metodi).</div>
+</div>
+
+<div class="stage"><span class="stage-n">2</span><span class="stage-t">Il QTc</span><span class="stage-w">Mazzanti 2018, Metodi e Tab. 2</span></div>
+<div class="card">
+  <div class="riga"><span class="fl">QTc<small>ms, formula di Bazett</small></span><input type="number" id="qtc" min="300" max="700" step="1" inputmode="numeric" placeholder="ms"></div>
+  <div class="riga"><span class="fl">L'ECG del QTc</span>
+    <span class="seg">
+      <label><input type="radio" name="ecg" value="prima"><span>prima della terapia</span></label>
+      <label><input type="radio" name="ecg" value="bb"><span>in betabloccante</span></label>
+    </span></div>
+  <div class="muted" style="font-size:12.5px;margin-top:6px">Nel paper: il primo ECG a 12 derivazioni disponibile <b>prima della terapia</b>, a frequenza stabile vicina a 60 battiti al minuto e di giorno; QT in DII o V5, corretto con Bazett (Mazzanti 2018, Metodi). Le fasce della tabella sono di 10 ms, da 461–470 a oltre 560.</div>
+</div>
+
+<div class="stage"><span class="stage-n">3</span><span class="stage-t">Il rischio a 5 anni</span><span class="stage-w">Mazzanti 2018, Tab. 2, Fig. 2, Central Illustration</span></div>
+<div class="card" id="outRischio"></div>
+<div class="card"><h3>La Tab. 2 per intero — la cella del paziente è riquadrata</h3><div class="scorri" id="outGriglia"></div></div>
+
+<div class="stage"><span class="stage-n">4</span><span class="stage-t">Il paziente e la decisione</span><span class="stage-w">Rec. Table 41, pp. 4077–4078 · Fig. 31, p. 4078</span></div>
+<div class="card">
+  <div class="riga"><span class="fl">Quadro</span>
+    <span class="seg">
+      <label><input type="radio" name="quadro" value="as"><span>asintomatico</span></label>
+      <label><input type="radio" name="quadro" value="sinc"><span>sincope aritmica</span></label>
+      <label><input type="radio" name="quadro" value="arr"><span>arresto o aritmia non tollerata</span></label>
+    </span></div>
+  <div class="riga"><span class="fl">Terapia in corso</span>
+    <span class="seg">
+      <label><input type="radio" name="ter" value="no"><span>nessun betabloccante</span></label>
+      <label><input type="radio" name="ter" value="nad"><span>nadololo</span></label>
+      <label><input type="radio" name="ter" value="altro"><span>un altro betabloccante</span></label>
+    </span></div>
+</div>
+<div class="card" id="outDec"></div>
+
+<div class="card"><h3>Limiti del modello per questo paziente</h3><ul class="lista" id="limiti"></ul></div>
+<div class="foot">
+  <strong>Tabella.</strong> Mazzanti A, Maragna R, Vacanti G, et al. Interplay between genetic substrate, QTc duration, and arrhythmia risk in patients with long QT syndrome. <em>J Am Coll Cardiol</em> 2018;71:1663–1671, doi:10.1016/j.jacc.2018.01.078, PMID 29650123 — popolazione, misura del QTc ed evento (Metodi), Tab. 1, Tab. 2 (rischio a 5 anni senza betabloccante per fascia di QTc e genotipo), Tab. 3 (predittori e betabloccanti), Fig. 2 e Central Illustration (gruppi di rischio), Discussione e limiti. Letta nel testo pubblicato (jacc.org) e controllata cella per cella sulla versione accettata dopo revisione (archivio dell'Instituto de Salud Carlos III). Il supplementare non porta una formula. <strong>Soglia proposta.</strong> Mazzanti A, Trancuccio A, Kukavica D, et al. Independent validation and clinical implications of the risk prediction model for long QT syndrome (1-2-3-LQTS-Risk). <em>Europace</em> 2022;24:614–619, doi:10.1093/europace/euab238, PMID 34505884 — Abstract: soglia ≥5% a 5 anni per l'ICD, NNT, C-index; è il rif. 947 della ESC. <strong>Decisione.</strong> Zeppenfeld K, Tfelt-Hansen J, de Riva M, et al. 2022 ESC Guidelines for the management of patients with ventricular arrhythmias and the prevention of sudden cardiac death. <em>Eur Heart J</em> 2022;43:3997–4126, doi:10.1093/eurheartj/ehac262 — calcolatore 1-2-3 LQTS (p. 4075), diagnosi e terapia (Rec. Table 41, pp. 4077–4078), percorso (Fig. 31, p. 4078). Ogni numero mostrato porta la sua fonte.<br><br>
+  Strumento personale di studio e consultazione: <strong>non sostituisce il giudizio clinico</strong>. Non dà dosi. Non salva i dati e non li invia in rete.
+</div>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  /* ═══ DATI ═══════════════════════════════════════════════════════════════
+     Mazzanti A, et al. J Am Coll Cardiol 2018;71:1663-1671 (PMID 29650123).
+     Tab. 2 — rischio di un evento aritmico potenzialmente letale a 5 anni
+     senza betabloccante, per fascia di QTc di 10 ms e genotipo: n della
+     cella, rischio %, IC 95%. Letta nel testo pubblicato (jacc.org) e
+     controllata cella per cella, come immagine, sulla versione accettata
+     dopo revisione (repisalud.isciii.es). Le stime vengono da un Cox con il
+     genotipo come variabile categorica e il QTc continuo, su 1070 pazienti
+     senza betabloccante, 29 eventi in 5150 anni-persona (nota della Tab. 2).
+     Il paper non pubblica coefficienti ne' sopravvivenza di base: nessuna
+     formula, solo questa tabella. */
+  var FASCE = ["461–470", "471–480", "481–490", "491–500", "501–510", "511–520", "521–530", "531–540", "541–550", "551–560", ">560"];
+  var GENI = ["LQT1", "LQT2", "LQT3"];
+  //        LQT1: [n, rischio, IC-, IC+]   LQT2                       LQT3
+  var T2 = [
+    [[78, 1.3, 0.3, 2.3], [44, 3.0, 0.8, 5.2], [18, 3.4, 0.7, 6.0]],     // 461–470 · Mazzanti 2018, Tab. 2
+    [[63, 1.5, 0.3, 2.7], [26, 3.4, 1.0, 5.8], [16, 3.8, 0.8, 6.8]],     // 471–480 · Mazzanti 2018, Tab. 2
+    [[50, 1.7, 0.4, 3.0], [39, 3.9, 1.3, 6.5], [15, 4.4, 1.0, 7.7]],     // 481–490 · Mazzanti 2018, Tab. 2
+    [[32, 2.0, 0.5, 3.5], [21, 4.5, 1.5, 7.4], [7, 5.0, 1.2, 8.7]],      // 491–500 · Mazzanti 2018, Tab. 2
+    [[15, 2.3, 0.5, 4.0], [15, 5.1, 1.8, 8.3], [9, 5.7, 1.3, 9.9]],      // 501–510 · Mazzanti 2018, Tab. 2
+    [[11, 2.6, 0.6, 4.6], [17, 5.9, 2.2, 9.5], [6, 6.5, 1.5, 11.3]],     // 511–520 · Mazzanti 2018, Tab. 2
+    [[5, 3.0, 0.7, 5.2], [10, 6.7, 2.5, 10.7], [7, 7.5, 1.7, 12.9]],     // 521–530 · Mazzanti 2018, Tab. 2
+    [[5, 3.4, 0.7, 6.0], [6, 7.6, 2.9, 12.2], [3, 8.5, 1.8, 14.7]],      // 531–540 · Mazzanti 2018, Tab. 2
+    [[6, 3.9, 0.8, 6.9], [4, 8.7, 3.3, 13.8], [2, 9.7, 1.9, 16.8]],      // 541–550 · Mazzanti 2018, Tab. 2
+    [[2, 4.4, 0.8, 7.9], [5, 9.9, 3.7, 15.7], [3, 11.0, 2.0, 19.2]],     // 551–560 · Mazzanti 2018, Tab. 2
+    [[14, 5.1, 0.8, 9.1], [22, 11.3, 4.1, 17.9], [7, 12.5, 2.1, 21.9]]   // >560    · Mazzanti 2018, Tab. 2
+  ];
+  /* Gruppi di rischio disegnati dal paper, letti cella per cella sulle
+     figure (non ricalcolati dalle soglie):
+     Fig. 2 — 0 sotto il 3%, 1 fra 3 e 6%, 2 fra 6 e 9%, 3 oltre il 9%.
+     Central Illustration — 0 R <=1% (QTc <=460 ms, tutti i genotipi, 42% dei
+     pazienti), 1 1% < R <=3% (31%), 2 3% < R <=6% (20%), 3 R >6% (7%). */
+  var FIG2 = [[0, 0, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 2], [0, 2, 2], [1, 2, 2], [1, 2, 3], [1, 3, 3], [1, 3, 3]];
+  var CENT = [[1, 1, 2], [1, 2, 2], [1, 2, 2], [1, 2, 2], [1, 2, 2], [1, 2, 3], [1, 3, 3], [2, 3, 3], [2, 3, 3], [2, 3, 3], [2, 3, 3]];
+  var FIG2_L = ["sotto il 3%", "fra 3% e 6%", "fra 6% e 9%", "oltre il 9%"];
+  var CENT_L = ["R ≤1%", "1% < R ≤ 3%", "3% < R ≤ 6%", "R > 6%"], CENT_P = [42, 31, 20, 7], CENT_K = ["k0", "k2", "k3", "k4"];
+  /* Tab. 3 (modello multivariato su 1710 pazienti, diverso da quello della
+     Tab. 2): donne HR 1,70 (1,00-2,88); sincope HR 2,52 (1,38-4,61); eventi
+     prima della diagnosi HR 2,56 (1,24-5,29); nadololo HR 0,38 (0,15-0,93);
+     propranololo 0,74 (0,32-1,68); selettivi 0,79 (0,35-1,77). Central
+     Illustration: nadololo HR 0,38, altri betabloccanti HR 0,76. */
+  /* Soglia proposta dallo studio di validazione che la ESC cita per la riga
+     IIb B (rif. 947): Mazzanti A, et al. Independent validation and clinical
+     implications of the risk prediction model for long QT syndrome
+     (1-2-3-LQTS-Risk). Europace 2022;24:614-619, PMID 34505884, Abstract:
+     rischio a 5 anni >=5%, la soglia piu' bilanciata per l'ICD secondo l'analisi
+     ROC; NNT 9 (IC 95% 6,3-13,6); 1689 pazienti del registro internazionale
+     (Rochester, NY), C-index 0,69 (0,61-0,77) contro 0,79 (0,70-0,88) nella
+     coorte di origine. Proposta dello studio, non soglia della ESC
+     (decisione del medico, 07/10/2026: mostrarla accanto ai gruppi del paper).
+     qtcEsc: la soglia diagnostica della ESC (QTc >=480 ms, Rec. Table 41,
+     p. 4077) sotto la quale il Tool QT lungo tiene ancora il QTc «normale»
+     della riga IIa B; qui l'allungato comincia da 461 (Mazzanti 2018, Tab. 1,
+     nota: oltre 460 la forma manifesta). La ESC non definisce il QTc normale. */
+  var SOGLIE = { qtcMin:300, qtcMax:700, primaFascia:460, ultimaFascia:560, passo:10, valid:5, qtcEsc:480 };
+  var MZ = "Mazzanti 2018", MT2 = "Mazzanti 2018, Tab. 2", MF2 = "Mazzanti 2018, Fig. 2", MCI = "Mazzanti 2018, Central Illustration",
+      MT3 = "Mazzanti 2018, Tab. 3", MMET = "Mazzanti 2018, Metodi", MDIS = "Mazzanti 2018, Discussione",
+      R41a = "ESC 2022, Rec. Table 41, p. 4077", R41b = "ESC 2022, Rec. Table 41, p. 4078", F31 = "ESC 2022, Fig. 31, p. 4078",
+      P74 = "ESC 2022, p. 4074", P75 = "ESC 2022, p. 4075",
+      MV = "Mazzanti 2022, Europace 24:614–619, PMID 34505884, Abstract — rif. 947 della ESC", MT1 = "Mazzanti 2018, Tab. 1, nota";
+
+  /* ═══ FUNZIONI DI SCRITTURA (pure) ════════════════════════════════════ */
+  function nf(x) { return String(Math.round(x * 10) / 10).replace(".", ","); }
+  function nf1(x) { return x.toFixed(1).replace(".", ","); }
+  function pgs(p) { return ' <span class="pg">' + p + "</span>"; }
+  function ms(x) { return String(x).replace(".", ","); }
+  function corPill(c, l) { var k = { "I":"c1", "IIa":"c2a", "IIb":"c2b", "III":"c3" }[c]; return '<span class="cor ' + k + '">' + c + "</span>" + (l ? ' <span class="cor ' + k + '" style="opacity:.85">' + l + "</span>" : ""); }
+
+  /* ═══ FUNZIONI DI CALCOLO (pure) ══════════════════════════════════════ */
+  // La fascia di 10 ms. Le fasce della tabella sono in ms interi (461-470 ...);
+  // un QTc con decimali cade nella fascia che lo contiene: (460, 470] e cosi' via.
+  function fascia(qtc) {
+    if (qtc === null) return { stato:"manca" };
+    if (qtc < SOGLIE.qtcMin || qtc > SOGLIE.qtcMax) return { stato:"fuori" };
+    if (qtc <= SOGLIE.primaFascia) return { stato:"sotto" };
+    if (qtc > SOGLIE.ultimaFascia) return { stato:"ok", i:FASCE.length - 1 };
+    return { stato:"ok", i:Math.ceil((qtc - SOGLIE.primaFascia) / SOGLIE.passo) - 1 };
+  }
+  function geneIdx(g) { return g === "lqt1" ? 0 : (g === "lqt2" ? 1 : (g === "lqt3" ? 2 : -1)); }
+  // La cella rispetto alla soglia proposta dallo studio di validazione (non della ESC).
+  function versoValid(x) { return x < SOGLIE.valid ? "sotto il 5%" : (x === SOGLIE.valid ? "pari al 5%" : "sopra il 5%"); }
+  // QTc fra 461 e 479 ms: qui allungato (Mazzanti), nel Tool QT lungo ancora «normale» (soglia ESC 480).
+  function zonaGrigia(qtc) { return qtc !== null && qtc > SOGLIE.primaFascia && qtc < SOGLIE.qtcEsc; }
+  function notaGrigia() {
+    return "<b>QTc fra 461 e 479 ms</b> con il genotipo positivo: qui è già <b>allungato</b> — il paper chiama manifesta la forma con QTc oltre 460 ms (" + MT1 + ") —, mentre il <b>Tool QT lungo</b> lo tiene ancora come <b>QTc normale</b> della riga del betabloccante " + corPill("IIa", "B") + " fino a 479 ms, perché la diagnosi sul solo QTc la ESC la fa da 480 ms" + pgs(R41a) + ". La ESC non definisce il QTc normale.";
+  }
+
+  // Il rischio della cella, o «—» con la ragione.
+  function rischio(s) {
+    var o = { esito:"manca", motivo:"", note:[] }, g = geneIdx(s.gene), f;
+    if (!s.gene) { o.motivo = "serve il gene (passo 1)"; return o; }
+    if (s.gene === "altro") { o.esito = "gene"; o.motivo = "la Tab. 2 copre solo KCNQ1, KCNH2 e SCN5A, cioè LQT1, LQT2 e LQT3"; return o; }
+    if (s.gene === "doppia") { o.esito = "gene"; o.motivo = "i portatori di due mutazioni, come nella sindrome di Jervell e Lange-Nielsen, erano esclusi dalla coorte (" + MMET + ")"; return o; }
+    if (s.gene === "nn") { o.esito = "gene"; o.motivo = "la tabella è per genotipo: senza il gene non c'è una colonna"; return o; }
+    if (!s.vari) { o.motivo = "serve la classificazione della variante (passo 1)"; return o; }
+    if (s.vari === "ben") { o.esito = "gene"; o.motivo = "le varianti benigne o probabilmente benigne erano escluse dalla coorte (" + MMET + "), e non fanno diagnosi"; return o; }
+    f = fascia(s.qtc);
+    if (f.stato === "manca") { o.motivo = "serve il QTc (passo 2)"; return o; }
+    if (f.stato === "fuori") { o.esito = "fuori"; o.motivo = "QTc " + ms(s.qtc) + " ms è fuori scala (300–700 ms)"; return o; }
+    if (f.stato === "sotto") { o.esito = "sotto"; o.motivo = "QTc " + ms(s.qtc) + " ms: la tabella comincia da 461 ms. Il paper mette tutti i genotipi con QTc ≤460 ms nel gruppo a rischio più basso, R ≤1% a 5 anni (" + MCI + "), e non li stratifica oltre: è il sottogruppo a decorso benigno (" + MDIS + ")"; o.cent = 0; return o; }
+    if (!s.ecg) { o.motivo = "serve sapere se il QTc viene da un ECG prima della terapia (passo 2)"; return o; }
+    var c = T2[f.i][g];
+    o.esito = "ok"; o.i = f.i; o.g = g; o.n = c[0]; o.r = c[1]; o.lo = c[2]; o.hi = c[3]; o.fig2 = FIG2[f.i][g]; o.cent = CENT[f.i][g];
+    o.riserva = s.ecg === "bb";
+    if (o.riserva) o.note.push("QTc misurato <b>in betabloccante</b>: la tabella usa il QTc del primo ECG <b>prima della terapia</b> (" + MMET + "; nella Fig. 2 «baseline QTc»). Con un QTc in terapia la cella è una lettura con riserva.");
+    if (s.vari === "vus") o.note.push("Variante di <b>significato incerto</b>: era l'11% della coorte (" + MMET + "). Per la ESC è la mutazione <b>patogena</b> a fare la diagnosi qualunque sia il QT" + pgs(R41a) + ": con una variante incerta la diagnosi va fatta per un'altra via.");
+    if (s.vari === "pat" && zonaGrigia(s.qtc)) o.note.push(notaGrigia());
+    if (f.i === FASCE.length - 1) o.note.push("La fascia <b>oltre 560 ms</b> è aperta: la tabella dà un solo valore per ogni QTc sopra 560.");
+    if (c[0] <= 5) o.note.push("Nella coorte questa cella ha <b>" + c[0] + " pazienti</b>: la stima viene dal modello su tutti i 1070 pazienti senza betabloccante, non dalla sola cella (" + MT2 + ", nota), e l'intervallo di confidenza è largo.");
+    return o;
+  }
+
+  // La decisione della ESC 2022 per questo quadro.
+  function decisione(s, r) {
+    var o = { esito:"manca", righe:[], note:[], motivo:"" };
+    if (!s.quadro) { o.motivo = "serve il quadro clinico (passo 4)"; return o; }
+    if (!s.ter) { o.motivo = "serve la terapia in corso (passo 4): la tabella è il rischio senza betabloccante"; return o; }
+    var lqt3 = s.gene === "lqt3";
+    if (s.quadro !== "as") {
+      o.esito = "sint";
+      o.righe.push(["La decisione <b>non passa dal calcolatore</b>: il calcolatore serve all'asintomatico" + pgs(R41b + "; " + F31) + ". Il percorso completo — diagnosi, terapia del genotipo, ICD e LCSD con le classi — è nel <b>Tool QT lungo</b>", null, null, null]);
+      if (s.quadro === "arr") o.righe.push(["<b>ICD in aggiunta al betabloccante</b> dopo un arresto cardiaco", "I", "B", R41a]);
+      o.righe.push(["<b>ICD</b> se resta sintomatico — sincope aritmica o aritmia ventricolare non tollerata — con betabloccante e terapie del genotipo", "I", "C", R41a]);
+      o.note.push("Nel modello della Tab. 3, una sincope (HR 2,52) e un evento prima della diagnosi (HR 2,56) aumentano il rischio indipendentemente da QTc e genotipo (" + MT3 + "): la cella della Tab. 2 non li conta, e per questo paziente lo sottostima.");
+      return o;
+    }
+    if (r.esito === "manca" || r.esito === "fuori") { o.motivo = "manca il rischio della cella (passo 3)"; return o; }
+    // Fig. 31: con mutazione patogena e QTc normale il betabloccante e' IIa e la
+    // colonna si ferma li' (nessun riquadro dopo); il IIa B della Rec. Table 41
+    // e' scritto per la mutazione PATOGENA, non per la variante incerta.
+    var bbNorm = "Se il QTc è giudicato normale, con una mutazione <b>patogena</b> la figura dà il <b>betabloccante</b> " + corPill("IIa", "B") + pgs(R41a) + " e lì si ferma" + pgs(F31);
+    if (r.esito === "sotto") {
+      o.esito = "sotto";
+      o.righe.push(["Il calcolatore è il passo dell'<b>asintomatico con QT allungato</b>" + pgs(F31) + "; con QTc ≤460 ms il paper non stratifica oltre (" + MDIS + ")", null, null, null]);
+      if (s.vari === "vus") o.righe.push(["Con una variante di <b>significato incerto</b> e QTc ≤460 ms la diagnosi non la fa la variante e non la fa il QTc" + pgs(R41a) + ": il <b>betabloccante</b> " + corPill("IIa", "B") + " è scritto per la mutazione patogena con QTc normale; se la diagnosi c'è, viene dal punteggio (Tool QT lungo)", null, null, null]);
+      else o.righe.push([bbNorm, null, null, null]);
+      return o;
+    }
+    var bbAll = ["<b>Betabloccante</b>, meglio nadololo o propranololo, con QT allungato documentato; nell'LQT3 anche la <b>mexiletina</b> " + corPill("I", "C") + " — dosi e rene nel Tool QT lungo", "I", "B", R41a];
+    if (r.esito === "gene") {
+      // Genotipo fuori dalla tabella: il ramo del betabloccante lo decide
+      // comunque il QTc (Fig. 31, terza o quarta colonna).
+      o.esito = "nongene";
+      var fq = fascia(s.qtc);
+      if (fq.stato === "ok") {
+        o.righe.push(bbAll);
+        if ((s.gene === "altro" || s.gene === "doppia") && zonaGrigia(s.qtc)) o.note.push(notaGrigia());
+      }
+      else if (fq.stato === "sotto") o.righe.push([bbNorm + "; senza una mutazione patogena la diagnosi, se c'è, viene dal punteggio (Tool QT lungo)", null, null, null]);
+      else o.righe.push(["<b>Betabloccante</b>: " + corPill("I", "B") + " con QT allungato documentato, " + corPill("IIa", "B") + " con mutazione patogena e QTc normale" + pgs(R41a) + " — serve il QTc (passo 2) per sapere quale", null, null, null]);
+      var perche = s.vari === "ben" ? "con una variante benigna o probabilmente benigna il genotipo non entra nella tabella" :
+        (s.gene === "nn" ? "qui il genotipo non è noto" : (s.gene === "doppia" ? "le mutazioni doppie erano escluse dal paper" : "questo gene non è nella tabella"));
+      o.righe.push(["Il calcolatore vale solo per LQT1, LQT2 e LQT3" + pgs(F31) + ": " + perche + ", la fonte non dà una stima e la figura non dà altro — <b>follow-up</b>", null, null, F31]);
+      return o;
+    }
+    o.righe.push(bbAll);
+    o.esito = "as";
+    o.righe.push(["<b>Stimare il rischio</b> da genotipo e QTc prima di iniziare la terapia — classe IIb nella figura" + pgs(F31) + ", IIa C nella tabella: è un'incoerenza della fonte", "IIa", "C", R41b]);
+    o.righe.push(["<b>ICD</b> considerabile nell'asintomatico <b>ad alto rischio</b> secondo il calcolatore, in aggiunta alle terapie del genotipo" + (lqt3 ? " — qui la mexiletina" : " (la mexiletina nell'LQT3)"), "IIb", "B", R41b]);
+    o.note.push("<b>La ESC non dice da quale rischio sia «alto»</b>" + pgs(R41b) + ": lo decide il medico, e lo strumento non lo dichiara. Per orientarsi, i gruppi del paper: questa cella è nel gruppo <b>" + CENT_L[r.cent] + "</b> della Central Illustration (il più alto è R &gt; 6%, il 7% dei pazienti) e nel gruppo <b>" + FIG2_L[r.fig2] + "</b> della Fig. 2 (il più alto è oltre il 9%). Lo <b>studio di validazione</b> che la ESC cita per questa riga propone come soglia più bilanciata per l'ICD, dall'analisi ROC, un rischio a 5 anni <b>≥5%</b>: con quella soglia il numero di pazienti da trattare sarebbe 9 (NNT, IC 95% 6,3–13,6); nella coorte di validazione — 1689 pazienti del registro internazionale — il C-index era 0,69 (0,61–0,77), contro 0,79 (0,70–0,88) nella coorte di origine (" + MV + "). Questa cella, " + nf1(r.r) + "%, è <b>" + versoValid(r.r) + "</b>. È la proposta di quello studio, non una soglia della ESC.");
+    return o;
+  }
+
+  /* ═══ STATO E DISEGNO ═════════════════════════════════════════════════ */
+  function el(id) { return document.getElementById(id); }
+  function num(id) { var v = el(id).value; if (v === "") return null; var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? null : n; }
+  function radio(n) { var e = document.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ""; }
+  function nota(g, t) { return '<div class="nota ' + (g || "") + '">' + t + "</div>"; }
+  function chip(k, t) { return '<span class="cat ' + k + '">' + t + "</span>"; }
+  function passo(t, att) { return '<div class="passo' + (att ? " att" : "") + '"><span class="ico">' + (att ? "→" : "·") + '</span><span class="tx">' + t + "</span></div>"; }
+  function mostra(id, si) { var e = el(id); e.className = e.className.replace(/(^|\s)hide(\s|$)/g, " ").replace(/^\s+|\s+$/g, ""); if (!si) e.className += " hide"; }
+
+  function S() {
+    var s = {};
+    s.gene = radio("gene"); s.vari = (s.gene === "lqt1" || s.gene === "lqt2" || s.gene === "lqt3") ? radio("var") : "";
+    s.qtc = num("qtc"); s.ecg = radio("ecg"); s.quadro = radio("quadro"); s.ter = radio("ter");
+    return s;
+  }
+
+  function griglia(r) {
+    var h = '<table class="griglia"><thead><tr><th>QTc, ms</th><th>LQT1</th><th>LQT2</th><th>LQT3</th></tr></thead><tbody>', i, g;
+    for (i = 0; i < FASCE.length; i++) {
+      h += '<tr><td class="qt">' + FASCE[i] + "</td>";
+      for (g = 0; g < 3; g++) h += '<td class="g' + CENT[i][g] + (r.esito === "ok" && r.i === i && r.g === g ? " sel" : "") + '">' + nf1(T2[i][g][1]) + "</td>";
+      h += "</tr>";
+    }
+    h += "</tbody></table>";
+    h += '<div class="muted" style="font-size:12px;margin-top:6px">Rischio % a 5 anni senza betabloccante' + pgs(MT2) + '. Colori: i gruppi della Central Illustration — giallo 1% &lt; R ≤ 3%, arancio 3% &lt; R ≤ 6%, rosso R &gt; 6%; sotto 461 ms, R ≤1%' + pgs(MCI) + ".</div>";
+    return h;
+  }
+
+  function disegna() {
+    var s = S(), i;
+    mostra("rigaVar", s.gene === "lqt1" || s.gene === "lqt2" || s.gene === "lqt3");
+    var r = rischio(s), h = "";
+    if (r.esito === "ok") {
+      h += '<div class="esito"><span class="big">Rischio a 5 anni ' + nf1(r.r) + "%</span>" + chip(CENT_K[r.cent], CENT_L[r.cent]) + (r.riserva ? chip("k2", "con riserva") : "") + "</div>";
+      h += passo("<b>" + GENI[r.g] + "</b>, QTc " + ms(s.qtc) + " ms → fascia <b>" + FASCE[r.i] + " ms</b>: rischio <b>" + nf1(r.r) + "%</b> (IC 95% " + nf1(r.lo) + "–" + nf1(r.hi) + "), senza betabloccante; " + r.n + " pazienti della coorte nella cella" + pgs(MT2) + ".", true);
+      h += passo("Gruppo del paper: <b>" + CENT_L[r.cent] + "</b>, il " + CENT_P[r.cent] + "% dei pazienti" + pgs(MCI) + "; nella Fig. 2 <b>" + FIG2_L[r.fig2] + "</b>" + pgs(MF2) + ".");
+      h += passo("Soglia <b>≥5% a 5 anni</b>, proposta per l'ICD dallo studio di validazione che la ESC cita (non una soglia della ESC): questa cella è <b>" + versoValid(r.r) + "</b> (" + MV + ").");
+      h += passo("Evento: il primo evento aritmico potenzialmente letale — morte improvvisa, arresto rianimato, tachicardia ventricolare polimorfa non tollerata (" + MMET + ").");
+      for (i = 0; i < r.note.length; i++) h += nota("", r.note[i]);
+    } else if (r.esito === "sotto") {
+      h += '<div class="esito"><span class="big">Rischio della tabella —</span>' + chip("k0", "QTc ≤460: R ≤1%") + "</div>";
+      h += passo('<span class="muted">—</span> ' + r.motivo + ".");
+      h += passo("Nella coorte, chi aveva QTc ≤460 ms aveva un tasso annuo di eventi dello 0,088%, contro lo 0,72% di chi lo aveva oltre 460 (Mazzanti 2018, Tab. 1).");
+    } else {
+      h += '<div class="esito"><span class="big">Rischio —</span>' + chip("kx", r.esito === "gene" ? "genotipo non coperto" : (r.esito === "fuori" ? "fuori scala" : "mancano dati")) + "</div>";
+      h += passo('<span class="muted">—</span> ' + r.motivo + ".");
+    }
+    el("outRischio").innerHTML = h;
+    el("outGriglia").innerHTML = griglia(r);
+
+    var d = decisione(s, r), hd = "";
+    if (d.esito === "manca") hd += '<div class="esito">' + chip("kx", "decisione —") + '<span class="muted">' + d.motivo + "</span></div>";
+    else {
+      for (i = 0; i < d.righe.length; i++) { var x = d.righe[i]; hd += passo(x[0] + (x[1] ? " " + corPill(x[1], x[2]) : "") + (x[3] ? pgs(x[3]) : "") + ".", x[1] === "IIb" || x[1] === "I"); }
+      for (i = 0; i < d.note.length; i++) hd += nota("info", d.note[i]);
+    }
+    if (s.ter === "nad" || s.ter === "altro") hd += nota("", "<b>In terapia</b> con " + (s.ter === "nad" ? "nadololo" : "un altro betabloccante") + ": la tabella dà il rischio <b>senza</b> betabloccante. Il paper riporta HR " + (s.ter === "nad" ? "0,38 per il nadololo (IC 0,15–0,93)" : "0,76 per gli altri betabloccanti nella Central Illustration — propranololo 0,74 (0,32–1,68) e selettivi 0,79 (0,35–1,77) nella Tab. 3, non significativi") + pgs(s.ter === "nad" ? MT3 : MCI + "; " + MT3) + ", da usare per il rischio residuo, ma non dà il calcolo: lo strumento non lo fa.");
+    el("outDec").innerHTML = hd;
+
+    var lim = [];
+    lim.push("<b>Coorte</b>: 1710 portatori di una sola mutazione in KCNQ1 (963), KCNH2 (551) o SCN5A (196), da 812 famiglie, seguiti in un solo centro per una mediana di 7,1 anni (" + MZ + ": Abstract, Metodi, Tab. 1 e Discussione). La Tab. 2 viene dai 1070 senza betabloccante: <b>29 eventi</b> in 5150 anni-persona (" + MT2 + ", nota).");
+    lim.push("<b>Età</b>: il paper non riporta l'età della coorte. La ESC dà 14 anni come età media alla presentazione della sindrome" + pgs(P74) + ", non della coorte.");
+    lim.push("<b>Sesso, sincope, eventi prima della diagnosi</b>: predittori indipendenti nel modello della Tab. 3 (donne HR 1,70; sincope HR 2,52; evento prima della diagnosi HR 2,56), che la Tab. 2 non usa: la cella non li conta (" + MT3 + ").");
+    lim.push("<b>Betabloccante</b>: la cella è il rischio senza terapia, con il QTc prima della terapia; il paper la propone anche per stimare il rischio di chi non assume il farmaco con regolarità (" + MF2 + ", didascalia).");
+    lim.push("<b>ICD</b>: il paper non riporta quanti pazienti avessero un ICD né come ne siano stati contati gli interventi; dice che lo schema aiuta a decidere se l'ICD serva oltre ai farmaci (" + MDIS + "). La ESC non fissa la soglia" + pgs(R41b) + "; lo studio di validazione propone ≥5% a 5 anni (" + MV + "), che resta una proposta: la scelta è del medico.");
+    lim.push("<b>Registro</b>: i limiti dei registri — difficile controllare per decenni l'aderenza alla terapia e alle raccomandazioni sullo stile di vita (" + MZ + ", limiti dello studio).");
+    lim.push("<b>Fasce di 10 ms</b>: dentro una fascia il rischio è uno solo, e il calcolatore online che la ESC nomina (validato in una coorte indipendente, rif. 947" + pgs(P75) + ") non è riprodotto: lo strumento legge la tabella del paper originale, che non pubblica la formula.");
+    lim.push("<b>Rif. 947</b>: la ESC lo cita come Europace 2021;24:697–698; secondo PubMed lo studio di validazione è Europace 2022;24:614–619 (PMID 34505884), e 698–699 è la risposta degli autori a una lettera (PMID 35303087).");
+    lim.push("<b>Nessuna dose</b>: lo strumento non dà farmaci né dosi; betabloccante e mexiletina, con il rene, sono nel Tool QT lungo.");
+    el("limiti").innerHTML = "<li>" + lim.join("</li><li>") + "</li>";
+
+    function bar(id, kk, t) { var b = el(id); b.className = "cat " + kk; b.innerHTML = t; }
+    bar("barRischio", r.esito === "ok" ? (r.riserva ? "k2" : CENT_K[r.cent]) : (r.esito === "sotto" ? "k0" : "kx"), r.esito === "ok" ? nf1(r.r) + "% · " + FASCE[r.i] + " ms" : (r.esito === "sotto" ? "≤460 ms" : "—"));
+    bar("barGruppo", r.esito === "ok" || r.esito === "sotto" ? CENT_K[r.cent] : "kx", r.esito === "ok" || r.esito === "sotto" ? CENT_L[r.cent] : "—");
+    bar("barEsc", d.esito === "as" ? "k2" : (d.esito === "sint" ? "k4" : "kx"), d.esito === "as" ? "ICD IIb B se alto" : (d.esito === "sint" ? "non dal calcolatore" : (d.esito === "manca" ? "—" : "calcolatore non applicabile")));
+  }
+
+  document.addEventListener("input", disegna);
+  document.addEventListener("change", disegna);
+  el("azzera").addEventListener("click", function () {
+    var ins = document.querySelectorAll("input"), i;
+    for (i = 0; i < ins.length; i++) {
+      if (ins[i].type === "checkbox" || ins[i].type === "radio") ins[i].checked = false;
+      else ins[i].value = "";
+    }
+    disegna();
+    window.scrollTo(0, 0);
+  });
+
+  window.LQTS_MOTORE = { fascia:fascia, rischio:rischio, decisione:decisione, T2:T2, FIG2:FIG2, CENT:CENT };
+  disegna();
+})();
+</script>
+<script data-iphone="web">
+// Solo da un indirizzo https, cioe' dalla pagina pubblicata: aperto come file
+// il tool non cerca ne' manifest ne' service worker, che accanto al file non
+// ci sono. Un errore qui non deve fermare niente: e' un di piu'.
+(function(){
+if(location.protocol!=="https:") return;
+try{
+  var t=document.getElementsByTagName("head")[0];
+  var m=document.createElement("link"); m.rel="manifest"; m.href="manifest.webmanifest";
+  var i=document.createElement("link"); i.rel="apple-touch-icon"; i.href="icona-180.png";
+  t.appendChild(m); t.appendChild(i);
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js")["catch"](function(){});
+}catch(e){}
+})();
+</script>
+<script data-iphone="fine">document.documentElement.className+=" motore-ok";</script>
+</body>
+</html>
